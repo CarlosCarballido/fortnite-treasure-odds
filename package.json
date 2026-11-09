@@ -1,7 +1,7 @@
 {
   "name": "fortnite-treasure-odds",
   "version": "1.0.0",
-  "description": "Calculadora matemática y simulador Monte Carlo de probabilidades oficiales de Fortnite Treasure Hunters (Cazatesoros) 2026.",
+  "description": "Calculadora matemática y simulador Monte Carlo independiente para el evento Cazatesoros 2026.",
   "type": "module",
   "author": "Carlos Carballido",
   "license": "MIT",

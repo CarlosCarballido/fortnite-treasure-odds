@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { Card } from '../common/Card';
 import { ShieldAlert, TrendingDown } from 'lucide-react';
 import { calculateFailureProbability, formatProbabilityPercentage } from '../../math/probability';
-import { OFFICIAL_DENOMINATORS } from '../../config/constants';
+import { BASE_DENOMINATORS } from '../../config/constants';
 
 export const SurvivalCalculator: React.FC<{ loggedChests: number }> = ({ loggedChests }) => {
   const [plannedSeasonChests, setPlannedSeasonChests] = useState<number>(20000);
   const [bonusPercentage, setBonusPercentage] = useState<number>(20); // 20% of chests during bonus hours
 
-  const baseP = 1 / OFFICIAL_DENOMINATORS.pirate_shop;
+  const baseP = 1 / BASE_DENOMINATORS.pirate_shop;
   const normalChests = Math.round(plannedSeasonChests * (1 - bonusPercentage / 100));
   const bonusChests = Math.round(plannedSeasonChests * (bonusPercentage / 100));
 

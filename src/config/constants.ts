@@ -1,6 +1,6 @@
 import { RewardCategory } from '../types';
 
-export const OFFICIAL_DENOMINATORS: Record<RewardCategory, number> = {
+export const BASE_DENOMINATORS: Record<RewardCategory, number> = {
   pirate_shop: 137500,
   golden_skin: 1562500,
   vehicle_decal: 7813,
@@ -10,33 +10,33 @@ export const OFFICIAL_DENOMINATORS: Record<RewardCategory, number> = {
   gizmo: 127,
 };
 
-export const OFFICIAL_SOURCES = [
+export const REFERENCE_SOURCES = [
   {
     id: 'fortnite-status-odds',
-    title: 'Fortnite Status (Publicación Oficial de Probabilidades)',
+    title: 'Fortnite Status (Publicación de Probabilidades en X)',
     url: 'https://x.com/FortniteStatus/status/2119202610322227327',
     date: '2026-11-07',
     verified: true,
-    certainty: 'official' as const,
-    description: 'Publicación oficial en X con las tasas denominadoras base por cofre para partidas normales.',
+    certainty: 'public_data' as const,
+    description: 'Publicación en la cuenta pública de estado del juego con las tasas base por cofre para partidas estándar.',
   },
   {
     id: 'fortnite-blog-announcement',
-    title: 'Artículo oficial Cazatesoros (Fortnite News)',
+    title: 'Artículo informativo Cazatesoros (Noticias de Fortnite)',
     url: 'https://www.fortnite.com/news/fortnite-treasure-hunters-the-greatest-adventure-of-all-time?lang=es-ES',
     date: '2026-11-01',
     verified: true,
-    certainty: 'official' as const,
-    description: 'Anuncio general del evento, mecánicas de escuadrones compartidos y fechas generales.',
+    certainty: 'public_data' as const,
+    description: 'Anuncio general del evento, mecánicas descritas para grupos y fechas generales de la temporada.',
   },
   {
     id: 'fortnite-gg-database',
-    title: 'Fortnite.gg (Base de datos y catálogo de recompensas)',
+    title: 'Fortnite.gg (Base de datos comunitaria de recompensas)',
     url: 'https://fortnite.gg/treasure-hunt',
     date: '2026-11-08',
     verified: true,
     certainty: 'third_party' as const,
-    description: 'Compilación de cosméticos, rotaciones semanales y detalles de elementos cosméticos.',
+    description: 'Compilación comunitaria de cosméticos, rotaciones semanales y detalles de elementos cosméticos.',
   },
   {
     id: 'vgc-token-guide',
@@ -45,7 +45,7 @@ export const OFFICIAL_SOURCES = [
     date: '2026-11-08',
     verified: true,
     certainty: 'third_party' as const,
-    description: 'Análisis detallado de las ventanas de 14 días para 2026 y 2027, y restricciones de objetos.',
+    description: 'Análisis independiente sobre las ventanas de 14 días para 2026 y 2027, y restricciones de objetos.',
   },
 ];
 
@@ -65,7 +65,7 @@ export const HISTORIC_SESSIONS = [
       gizmo: 1.0,
     },
     status: 'historical' as const,
-    notes: 'Primera sesión con bonus multiplicadores anunciados por Epic Games.',
+    notes: 'Primera sesión con bonus multiplicadores anunciados públicamente.',
   },
   {
     id: 'session-2026-11-07-2',
@@ -95,4 +95,3 @@ export const EVENT_DATES = {
   week4: { start: '2026-11-22T00:00:00Z', end: '2026-11-29T00:00:00Z' },
   week5: { start: '2026-11-29T00:00:00Z', end: '2026-12-06T00:00:00Z' },
 };
-

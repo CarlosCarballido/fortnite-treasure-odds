@@ -149,7 +149,7 @@ export const RewardCollection: React.FC<RewardCollectionProps> = ({
                   <div className="flex items-center space-x-1.5">
                     <Badge variant="rarity" rarity={reward.rarity}>{reward.rarity}</Badge>
                     <Badge variant="source" source={reward.source}>
-                      {reward.source === 'official' ? 'Oficial' : reward.source === 'user_custom' ? 'Editado' : 'Hipótesis'}
+                      {reward.source === 'public_data' ? 'Dato Público' : reward.source === 'user_custom' ? 'Editado' : 'Hipótesis'}
                     </Badge>
                   </div>
 
@@ -215,7 +215,7 @@ export const RewardCollection: React.FC<RewardCollectionProps> = ({
             </h3>
           </div>
           <p className="text-xs text-slate-400 mb-4">
-            Nota matemática rigurosa: La probabilidad oficial publicada de 1/127 corresponde a obtener <strong>un Gizmo cualquiera</strong> al abrir el cofre, no a cada Gizmo de forma individual. La distribución interna exacta entre los 5 gizmos no ha sido detallada por Epic Games.
+            Nota matemática rigurosa: La tasa de 1/127 corresponde a obtener <strong>un Gizmo cualquiera</strong> al abrir el cofre, no a cada Gizmo de forma individual.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
             {KNOWN_GIZMOS.map((g) => (

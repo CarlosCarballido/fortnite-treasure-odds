@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Key, Sparkles, TrendingUp, HelpCircle, Compass, ShieldAlert, Award } from 'lucide-react';
 import { Card } from '../common/Card';
 import { Badge } from '../common/Badge';
-import { OFFICIAL_DENOMINATORS } from '../../config/constants';
+import { BASE_DENOMINATORS } from '../../config/constants';
 import {
   calculateCumulativeProbability,
   calculateChestsForTargetProbability,
@@ -26,7 +26,7 @@ export const FeaturedPirateCard: React.FC<FeaturedPirateCardProps> = ({
   const dict = DICTIONARY[settings.lang];
   const [multiplier, setMultiplier] = useState<number>(1.0);
 
-  const baseDenom = OFFICIAL_DENOMINATORS.pirate_shop; // 137,500
+  const baseDenom = BASE_DENOMINATORS.pirate_shop; // 137,500
   const effectiveP = Math.min(1, (1 / baseDenom) * multiplier);
 
   // Exact math calculations
@@ -53,7 +53,7 @@ export const FeaturedPirateCard: React.FC<FeaturedPirateCardProps> = ({
             <div>
               <div className="flex items-center space-x-2">
                 <Badge variant="rarity" rarity="supreme">Supreme</Badge>
-                <Badge variant="source" source="official">Probabilidad Oficial Epic Games</Badge>
+                <Badge variant="source" source="public_data">Tasa de Referencia</Badge>
               </div>
               <h2 className="text-2xl md:text-3xl font-gaming font-bold text-amber-400 mt-1">
                 {dict.pirateCard.title}

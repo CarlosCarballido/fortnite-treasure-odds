@@ -1,6 +1,6 @@
 import { SquadSimulationInput, ExactCalculationOutput } from '../types';
 import { calculateCumulativeProbability, calculatePercentiles, calculateExpectedChests, calculateChestsForTargetProbability } from './probability';
-import { OFFICIAL_DENOMINATORS } from '../config/constants';
+import { BASE_DENOMINATORS } from '../config/constants';
 
 export interface SquadCalculationResult {
   mode: string;
@@ -49,7 +49,7 @@ export function calculateSquadUniqueChests(
  * Evaluates squad efficiency and probability of getting the specified target reward.
  */
 export function evaluateSquadPerformance(input: SquadSimulationInput): SquadCalculationResult {
-  const baseDenom = OFFICIAL_DENOMINATORS[input.targetCategory] || OFFICIAL_DENOMINATORS.pirate_shop;
+  const baseDenom = BASE_DENOMINATORS[input.targetCategory] || BASE_DENOMINATORS.pirate_shop;
   const p = Math.min(1, (1 / baseDenom) * input.multiplier);
 
   const playerChests = input.players.map((p) => p.chestsPerMatch * p.matchesPlayed);

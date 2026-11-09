@@ -7,7 +7,7 @@ import {
   calculateCumulativeProbability,
   formatProbabilityPercentage,
 } from '../../math/probability';
-import { OFFICIAL_DENOMINATORS } from '../../config/constants';
+import { BASE_DENOMINATORS } from '../../config/constants';
 
 interface InverseCalculatorProps {
   loggedChests: number;
@@ -24,7 +24,7 @@ export const InverseCalculator: React.FC<InverseCalculatorProps> = ({ loggedChes
   const [availableHours, setAvailableHours] = useState<number>(15);
   const [effortMultiplier, setEffortMultiplier] = useState<number>(1.0);
 
-  const baseP = 1 / OFFICIAL_DENOMINATORS.pirate_shop; // 1 / 137500
+  const baseP = 1 / BASE_DENOMINATORS.pirate_shop; // 1 / 137500
   const effectiveP = Math.min(1, baseP * multiplier);
 
   // Goal Mode Calculations

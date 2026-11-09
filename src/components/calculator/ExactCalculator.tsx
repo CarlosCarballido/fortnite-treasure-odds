@@ -112,7 +112,7 @@ export const ExactCalculator: React.FC<ExactCalculatorProps> = ({
           </p>
         </div>
         <div className="flex items-center space-x-2">
-          <Badge variant="source" source="official">Datos Oficiales Epic Games</Badge>
+          <Badge variant="source" source="public_data">Tasas de Referencia</Badge>
           <Badge variant="rarity" rarity={currentReward.rarity}>{currentReward.rarity}</Badge>
         </div>
       </div>

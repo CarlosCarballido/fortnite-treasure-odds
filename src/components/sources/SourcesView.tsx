@@ -1,8 +1,8 @@
 import React from 'react';
 import { Card } from '../common/Card';
 import { Badge } from '../common/Badge';
-import { OFFICIAL_SOURCES } from '../../config/constants';
-import { ExternalLink, BookOpen, ShieldCheck, CheckCircle2, AlertTriangle, Sigma, HelpCircle } from 'lucide-react';
+import { REFERENCE_SOURCES } from '../../config/constants';
+import { ExternalLink, BookOpen, ShieldCheck, Sigma } from 'lucide-react';
 
 export const SourcesView: React.FC = () => {
   const glossaryTerms = [
@@ -29,12 +29,12 @@ export const SourcesView: React.FC = () => {
     {
       term: 'Modelo Categórico vs. Sorteos Independientes',
       formula: 'Modo A (Excluyente) vs. Modo B (Independiente)',
-      desc: 'Epic Games publicó las probabilidades marginales por categoría, pero no documentó si el cofre sortea primero una tabla de tesoros excluyentes (máximo 1 tesoro) o si cada premio realiza su propia tirada Bernoulli. La app permite probar ambas hipótesis.',
+      desc: 'Se publicaron las probabilidades marginales por categoría, pero no el código de sorteo interno. Este simulador permite evaluar tanto el sorteo de una tabla de tesoros excluyentes (máximo 1 tesoro) como tiradas independientes Bernoulli por premio.',
     },
     {
       term: 'Deduplicación y Bloqueo de No Repetibles',
       formula: 'Drop vs. Renormalización',
-      desc: 'Epic confirmó que los tesoros no se repiten (salvo Gizmos). Al conseguir un premio, su peso puede eliminarse de la ruleta (Drop) o redistribuirse proporcionalmente entre los restantes premios pendientes (Redistribución).',
+      desc: 'Se indicó que los tesoros no se repiten (salvo Gizmos). Al conseguir un premio, su peso puede eliminarse de la ruleta (Drop) o redistribuirse proporcionalmente entre los restantes premios pendientes (Redistribución).',
     },
   ];
 
@@ -44,22 +44,22 @@ export const SourcesView: React.FC = () => {
       <div>
         <h2 className="text-2xl font-gaming font-bold text-slate-100 flex items-center gap-2">
           <BookOpen className="w-6 h-6 text-amber-400" />
-          Datos, Fuentes Oficiales y Glosario Matemático
+          Datos, Fuentes de Consulta y Glosario Matemático
         </h2>
         <p className="text-xs text-slate-400">
-          Transparencia absoluta: verificación de fuentes primarias, citas oficiales y fundamentación probabilística.
+          Transparencia absoluta: verificación de fuentes públicas, citas de referencia y fundamentación probabilística.
         </p>
       </div>
 
-      {/* Official Sources Grid */}
+      {/* Reference Sources Grid */}
       <Card className="p-5 bg-slate-900/90 border-slate-800">
         <h3 className="text-sm font-bold text-slate-100 flex items-center gap-2 mb-4">
           <ShieldCheck className="w-4 h-4 text-emerald-400" />
-          Fuentes de Datos Confirmadas (Cazatesoros 2026)
+          Fuentes de Información y Datos Publicados (Cazatesoros 2026)
         </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {OFFICIAL_SOURCES.map((source) => (
+          {REFERENCE_SOURCES.map((source) => (
             <div
               key={source.id}
               className="p-4 rounded-xl bg-slate-950 border border-slate-800 flex flex-col justify-between hover:border-slate-700 transition-colors"
@@ -67,7 +67,7 @@ export const SourcesView: React.FC = () => {
               <div>
                 <div className="flex items-center justify-between mb-2">
                   <Badge variant="source" source={source.certainty}>
-                    {source.certainty === 'official' ? 'Oficial Epic Games' : 'Publicación de Terceros'}
+                    {source.certainty === 'public_data' ? 'Dato Público' : 'Reporte de Terceros'}
                   </Badge>
                   <span className="text-[11px] text-slate-500">{source.date}</span>
                 </div>
@@ -111,14 +111,26 @@ export const SourcesView: React.FC = () => {
         </div>
       </Card>
 
-      {/* Disclaimers & Legal */}
-      <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-500 leading-relaxed">
-        <strong>Aviso Legal y Descargo de Responsabilidad:</strong> Fortnite es una marca registrada de Epic Games, Inc.
-        Esta aplicación es un proyecto independiente de modelado matemático, simulación estocástica y calculadora probabilística
-        creado con fines educativos y de análisis para la comunidad de jugadores. No está patrocinado, avalado ni administrado por Epic Games.
-        No modifica ni interactúa con los archivos del juego de Fortnite ni altera los servidores de Epic Games de ninguna manera.
+      {/* Disclaimers & Legal Notice */}
+      <div className="p-5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-400 leading-relaxed space-y-2">
+        <strong className="text-amber-400 block text-sm font-gaming">Aviso Legal y Descargo de Responsabilidad</strong>
+        <p>
+          <strong>Fortnite</strong> es una marca comercial registrada de <strong>Epic Games, Inc.</strong>
+        </p>
+        <p>
+          Este sitio web y sus simuladores son un proyecto <strong>totalmente independiente, no comercial y comunitario</strong>,
+          creado por fans con propósitos estrictamente educativos, estadísticos y de análisis probabilístico.
+        </p>
+        <p>
+          Este software <strong>NO</strong> está afiliado, patrocinado, respaldado, administrado ni certificado por Epic Games, Inc.
+          ni por ninguna de sus empresas subsidiarias o asociadas. No existe ninguna relación comercial ni técnica entre el autor
+          y los propietarios de la marca.
+        </p>
+        <p className="text-slate-500 text-[11px]">
+          Esta aplicación opera de manera local en el navegador web del usuario y no interactúa, no modifica, no extrae datos
+          ni se conecta a servidores de juego de terceros.
+        </p>
       </div>
     </div>
   );
 };
-

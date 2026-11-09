@@ -23,7 +23,7 @@ export const EventBanner: React.FC = () => {
             <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
               Rotación en curso &middot; Semana 2 (8–15 nov 2026)
             </span>
-            <Badge variant="source" source="official">Confirmado</Badge>
+            <Badge variant="source" source="public_data">Dato Público</Badge>
           </div>
           <h1 className="text-lg sm:text-xl font-gaming font-bold text-slate-100 flex items-center gap-2">
             <Crown className="w-5 h-5 text-amber-400" />

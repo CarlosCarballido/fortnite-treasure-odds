@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card } from '../common/Card';
-import { Sparkles, TrendingUp, HelpCircle } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import {
   calculateChestsForTargetProbability,
   calculateCumulativeProbability,
@@ -11,14 +11,14 @@ export const WhatIfSimulator: React.FC = () => {
   const [hypotheticalDenom, setHypotheticalDenom] = useState<number>(25000);
   const [chestsToTest, setChestsToTest] = useState<number>(5000);
 
-  const officialDenom = 137500;
-  const officialP = 1 / officialDenom;
+  const baseDenom = 137500;
+  const baseP = 1 / baseDenom;
   const hypothetP = 1 / hypotheticalDenom;
 
-  const officialCum = calculateCumulativeProbability(chestsToTest, officialP);
+  const baseCum = calculateCumulativeProbability(chestsToTest, baseP);
   const hypothetCum = calculateCumulativeProbability(chestsToTest, hypothetP);
 
-  const officialChests50 = calculateChestsForTargetProbability(0.5, officialP);
+  const baseChests50 = calculateChestsForTargetProbability(0.5, baseP);
   const hypothetChests50 = calculateChestsForTargetProbability(0.5, hypothetP);
 
   return (
@@ -26,11 +26,11 @@ export const WhatIfSimulator: React.FC = () => {
       <div className="flex items-center space-x-2 mb-3">
         <Sparkles className="w-5 h-5 text-amber-400" />
         <h3 className="text-sm font-bold text-slate-100 font-gaming text-base uppercase">
-          Modo Especial: "¿Qué pasaría si Epic Games aumentara las probabilidades?"
+          Modo Especial: "¿Qué pasaría si variasen las probabilidades?"
         </h3>
       </div>
       <p className="text-xs text-slate-400 mb-4">
-        Explora hipotéticos balances del juego ajustando la tasa de aparición de la Ficha de la Tienda Pirata.
+        Explora hipotéticos balances ajustando la tasa de aparición de la Ficha de la Tienda Pirata.
       </p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4 text-xs">
@@ -48,8 +48,8 @@ export const WhatIfSimulator: React.FC = () => {
             className="w-full accent-amber-500"
           />
           <div className="flex justify-between text-[10px] text-slate-500 mt-0.5">
-            <span>1/1.000 (Ultra generoso)</span>
-            <span>1/137.500 (Oficial actual)</span>
+            <span>1/1.000 (Hipotético alto)</span>
+            <span>1/137.500 (Tasa de referencia)</span>
           </div>
         </div>
 
@@ -71,12 +71,12 @@ export const WhatIfSimulator: React.FC = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
-          <span className="text-[11px] text-slate-500 block">Tasa Oficial Actual (1/137.500)</span>
+          <span className="text-[11px] text-slate-500 block">Tasa de Referencia Actual (1/137.500)</span>
           <div className="text-xl font-gaming font-bold text-slate-300 mt-1">
-            {formatProbabilityPercentage(officialCum, 3)} en {chestsToTest.toLocaleString('es-ES')} cofres
+            {formatProbabilityPercentage(baseCum, 3)} en {chestsToTest.toLocaleString('es-ES')} cofres
           </div>
           <span className="text-[11px] text-slate-500 mt-1 block">
-            Cofres necesarios para el 50%: {officialChests50.toLocaleString('es-ES')}
+            Cofres necesarios para el 50%: {baseChests50.toLocaleString('es-ES')}
           </span>
         </div>
 
@@ -86,11 +86,10 @@ export const WhatIfSimulator: React.FC = () => {
             {formatProbabilityPercentage(hypothetCum, 3)} en {chestsToTest.toLocaleString('es-ES')} cofres
           </div>
           <span className="text-[11px] text-emerald-400 mt-1 block font-medium">
-            Cofres necesarios para el 50%: {hypothetChests50.toLocaleString('es-ES')} ({Math.round(((officialChests50 - hypothetChests50) / officialChests50) * 100)}% menos)
+            Cofres necesarios para el 50%: {hypothetChests50.toLocaleString('es-ES')} ({Math.round(((baseChests50 - hypothetChests50) / baseChests50) * 100)}% menos)
           </span>
         </div>
       </div>
     </Card>
   );
 };
-

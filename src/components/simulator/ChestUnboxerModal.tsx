@@ -137,7 +137,7 @@ export const ChestUnboxerModal: React.FC<ChestUnboxerModalProps> = ({
             Apertura de Cofre Cazatesoros
           </h3>
           <p className="text-xs text-slate-400 mt-1">
-            Respeta estrictamente las tasas oficiales 1/137.500 y multiplicadores.
+            Simulación basada en las tasas de referencia 1/137.500 y multiplicadores.
           </p>
         </div>
 

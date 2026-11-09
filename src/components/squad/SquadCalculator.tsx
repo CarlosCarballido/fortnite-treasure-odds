@@ -157,8 +157,8 @@ export const SquadCalculator: React.FC = () => {
           <p className="leading-relaxed text-slate-400">
             La probabilidad de un solo cofre <strong>NO se multiplica por 4</strong> al jugar en escuadrón. La ventaja del
             equipo proviene exclusivamente de que cuatro jugadores exploran el mapa y abren <strong>más cofres únicos</strong> en
-            la misma cantidad de tiempo. Cuando cualquiera encuentra la ficha, se otorga acceso a todo el grupo según las guías
-            oficiales.
+            la misma cantidad de tiempo. Cuando cualquiera encuentra la ficha, se otorga acceso a todo el grupo según los análisis
+            y guías publicadas.
           </p>
         </div>
       </div>

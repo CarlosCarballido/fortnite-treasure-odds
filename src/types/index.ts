@@ -9,7 +9,7 @@ export type RewardCategory =
 
 export type RarityTier = 'supreme' | 'major' | 'standard';
 
-export type DataSourceType = 'official' | 'third_party' | 'hypothesis' | 'user_custom';
+export type DataSourceType = 'public_data' | 'third_party' | 'hypothesis' | 'user_custom';
 
 export interface RewardItem {
   id: string;
@@ -159,4 +159,3 @@ export interface SavedScenario {
   squadMode: 'solo' | 'duo' | 'trio' | 'squad';
   playersCount: number;
 }
-

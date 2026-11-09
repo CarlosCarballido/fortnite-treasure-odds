@@ -32,7 +32,7 @@ export const Badge: React.FC<BadgeProps> = ({
     }
   } else if (variant === 'source' && source) {
     switch (source) {
-      case 'official':
+      case 'public_data':
         baseStyle += 'bg-emerald-950/80 text-emerald-300 border border-emerald-500/40';
         break;
       case 'third_party':
@@ -51,4 +51,3 @@ export const Badge: React.FC<BadgeProps> = ({
 
   return <span className={`${baseStyle} ${className}`}>{children}</span>;
 };
-

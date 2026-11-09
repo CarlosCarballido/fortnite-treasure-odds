@@ -3,7 +3,7 @@ export type Language = 'es' | 'en';
 export const DICTIONARY = {
   es: {
     appTitle: 'FORTNITE TREASURE ODDS',
-    appSubtitle: 'Simulador y Calculadora Oficial Cazatesoros 2026',
+    appSubtitle: 'Simulador y Calculadora Independiente Cazatesoros 2026',
     tabs: {
       dashboard: 'Dashboard',
       calculator: 'Calculadora',
@@ -43,12 +43,12 @@ export const DICTIONARY = {
       edit: 'Editar',
       loading: 'Cargando...',
       disclaimer:
-        'Herramienta matemática independiente. No afiliada con Epic Games. Basada estrictamente en las probabilidades oficiales publicadas el 7 de noviembre de 2026.',
+        'Herramienta matemática independiente comunitaria. Sin afiliación, patrocinio ni relación con Epic Games, Inc. ni con ninguna otra empresa.',
     },
     pirateCard: {
       title: 'FICHA DE ACCESO A LA TIENDA PIRATA',
       subtitle: 'El botín más codiciado de Cazatesoros',
-      baseDenominator: 'Tasa base oficial: 1 en 137.500 por cofre',
+      baseDenominator: 'Tasa base de referencia: 1 en 137.500 por cofre',
       currentOdds: 'Probabilidad actual por cofre',
       chestsOpened: 'Cofres registrados',
       cumulativeSoFar: 'Probabilidad acumulada hasta ahora',
@@ -64,7 +64,7 @@ export const DICTIONARY = {
   },
   en: {
     appTitle: 'FORTNITE TREASURE ODDS',
-    appSubtitle: 'Official Treasure Hunters 2026 Odds Calculator & Simulator',
+    appSubtitle: 'Independent Treasure Hunters 2026 Odds Calculator & Simulator',
     tabs: {
       dashboard: 'Dashboard',
       calculator: 'Calculator',
@@ -104,12 +104,12 @@ export const DICTIONARY = {
       edit: 'Edit',
       loading: 'Loading...',
       disclaimer:
-        'Independent mathematical tool. Not affiliated with Epic Games. Strictly based on official probabilities published on Nov 7, 2026.',
+        'Independent community mathematical tool. Not affiliated with, sponsored by, or endorsed by Epic Games, Inc. or any other company.',
     },
     pirateCard: {
       title: 'PIRATE SHOP ACCESS TOKEN',
       subtitle: 'The ultimate prize of Treasure Hunters',
-      baseDenominator: 'Official base rate: 1 in 137,500 per chest',
+      baseDenominator: 'Reference base rate: 1 in 137,500 per chest',
       currentOdds: 'Current odds per chest',
       chestsOpened: 'Logged chests',
       cumulativeSoFar: 'Cumulative odds so far',
@@ -124,4 +124,3 @@ export const DICTIONARY = {
     },
   },
 };
-

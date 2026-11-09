@@ -13,7 +13,6 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import { formatProbabilityPercentage } from '../../math/probability';
-import { OFFICIAL_DENOMINATORS } from '../../config/constants';
 
 interface MonteCarloViewProps {
   rewards: RewardItem[];

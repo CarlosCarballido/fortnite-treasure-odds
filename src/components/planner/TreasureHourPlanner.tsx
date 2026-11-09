@@ -3,7 +3,7 @@ import { Card } from '../common/Card';
 import { Badge } from '../common/Badge';
 import { Calendar, Clock, Sparkles, TrendingUp, HelpCircle, History, Plus, AlertCircle } from 'lucide-react';
 import { calculateCumulativeProbability, calculateMixedSessionsProbability, formatProbabilityPercentage } from '../../math/probability';
-import { OFFICIAL_DENOMINATORS, HISTORIC_SESSIONS } from '../../config/constants';
+import { BASE_DENOMINATORS, HISTORIC_SESSIONS } from '../../config/constants';
 import {
   BarChart,
   Bar,
@@ -28,7 +28,7 @@ export const TreasureHourPlanner: React.FC = () => {
   const [squadSize, setSquadSize] = useState<number>(4);
   const [squadOverlap, setSquadOverlap] = useState<number>(0.1);
 
-  const baseP = 1 / OFFICIAL_DENOMINATORS.pirate_shop; // 1 / 137500
+  const baseP = 1 / BASE_DENOMINATORS.pirate_shop; // 1 / 137500
 
   // Calculate pacing
   const cycleTimeMinutes = matchMinutes + lobbyMinutes;
@@ -246,7 +246,7 @@ export const TreasureHourPlanner: React.FC = () => {
             <div key={hs.id} className="p-4 rounded-xl bg-slate-950 border border-slate-800 text-xs">
               <div className="flex items-center justify-between mb-2">
                 <span className="font-bold text-slate-200 text-sm">{hs.name}</span>
-                <Badge variant="source" source="official">Confirmado</Badge>
+                <Badge variant="source" source="public_data">Dato Histórico</Badge>
               </div>
               <p className="text-slate-400 mb-3">{hs.notes}</p>
               <div className="grid grid-cols-3 gap-2 text-center bg-slate-900/60 p-2 rounded-lg border border-slate-800">

@@ -1,6 +1,6 @@
 # FORTNITE TREASURE ODDS — SIMULADOR DEFINITIVO
 
-> **Simulador probabilístico profesional y calculadora matemática oficial para el evento Fortnite Treasure Hunters (Cazatesoros), iniciado el 1 de noviembre de 2026.**
+> **Simulador probabilístico profesional y calculadora matemática comunitaria e independiente para el evento Cazatesoros (Treasure Hunters) 2026.**
 
 ![Fortnite Treasure Odds](https://img.shields.io/badge/Versi%C3%B3n-1.0.0-gold?style=for-the-badge)
 ![React](https://img.shields.io/badge/React-18.3-61dafb?style=for-the-badge&logo=react)
@@ -11,19 +11,30 @@
 
 ---
 
-## 📌 Descripción del Proyecto
+## ⚖️ Descargo de Responsabilidad y Términos Legales
 
-**Fortnite Treasure Odds** es una aplicación web de alto rendimiento orientada a jugadores de Fortnite, analistas y creadores de contenido. Permite simular y calcular con rigor matemático las probabilidades exactas de conseguir la codiciada **Ficha de Acceso a la Tienda Pirata (Pirate Shop Access)** y todas las demás recompensas del evento Cazatesoros 2026.
-
-La aplicación funciona **completamente en el cliente (sin backend, sin APIs de pago, sin registro y sin claves secretas)** y persiste todos tus datos localmente en `localStorage`.
+> **IMPORTANTE:**
+> 
+> - **Fortnite** es una marca comercial registrada de **Epic Games, Inc.**
+> - Este proyecto es una **herramienta comunitaria independiente y de código abierto**, creada por fans con propósitos estrictamente analíticos, educativos y estadísticos.
+> - Este software es un proyecto independiente desarrollado sin ninguna relación ni vinculación con **Epic Games, Inc.**, no habiendo sido patrocinado, certificado, respaldado ni asociado por dicha compañía ni sus entidades afiliadas.
+> - La aplicación funciona **100% en el navegador del cliente** de manera local (`localStorage`). No se conecta a servidores de juego, no interactúa con archivos de Fortnite, no altera partidas ni concede objetos reales en cuentas de jugadores.
 
 ---
 
-## 🎲 Tasas Oficiales Confirmadas (Epic Games — 7 de noviembre de 2026)
+## 📌 Descripción del Proyecto
+
+**Fortnite Treasure Odds** es una aplicación web analítica de alto rendimiento orientada a jugadores de la comunidad, analistas y creadores de contenido. Permite simular y calcular con rigor matemático las probabilidades de conseguir la **Ficha de Acceso a la Tienda Pirata (Pirate Shop Access)** y las distintas recompensas semanales del evento Cazatesoros.
+
+La aplicación funciona **completamente en el cliente (sin backend, sin APIs de pago, sin registro y sin claves secretas)**.
+
+---
+
+## 🎲 Tasas y Probabilidades de Referencia Publicadas (7 de noviembre de 2026)
 
 Fecha de referencia del simulador: **9 de noviembre de 2026** (Semana 2 activa: Solid Gold Lil Uzi Vert & Cadillac CT5-V Blackwing dorado).
 
-| Recompensa | Rareza | Denominador Oficial | Probabilidad Base por Cofre |
+| Recompensa | Rareza | Denominador Base | Probabilidad Base por Cofre |
 |:---|:---:|:---:|:---:|
 | **Pirate Shop Access** | Supreme | `137.500` | `~0,00072727%` |
 | **Aspecto dorado semanal** | Supreme | `1.562.500` | `~0,00006400%` |
@@ -55,7 +66,7 @@ La aplicación se abrirá en `http://localhost:5173`.
 ```bash
 npm test
 ```
-Ejecuta los 28 tests con Vitest, validando las fórmulas numéricamente estables (`expm1`, `log1p`), casos de prueba obligatorios, percentiles, escuadrones y PRNG reproducible.
+Ejecuta los 28 tests con Vitest, validando las fórmulas numéricamente estables (`expm1`, `log1p`), casos de prueba analíticos, percentiles, escuadrones y PRNG reproducible.
 
 ### 4. Compilar para producción:
 ```bash
@@ -71,11 +82,9 @@ npm run build
 - Banner de la rotación actual: **Semana 2 (8–15 de noviembre de 2026)** con Solid Gold Lil Uzi Vert y Cadillac CT5-V Blackwing.
 - Aviso educativo riguroso sobre la **Falacia del Jugador**.
 
-### 2. Calculadora de Probabilidades Exactas
+### 2. Calculadora de Probabilidades Exactas (`ExactCalculator.tsx`)
 - Fórmulas numéricamente estables para evitar cancelación catastrófica:
   $$P = 1 - (1 - p)^n = -\text{Math.expm1}(n \cdot \text{Math.log1p}(-p))$$
-- Cálculo para sesiones mixtas:
-  $$P = 1 - \prod (1 - p_i)^{n_i} = -\text{Math.expm1}\left(\sum n_i \cdot \text{Math.log1p}(-p_i)\right)$$
 - Percentiles estadísticos P10, P25, P50 (mediana: **95.308 cofres** sin bono, **47.654 cofres** con $\times 2$), P75, P90 (**316.605 cofres**), P95 y P99.
 - Gráficos interactivos con Recharts en escala lineal y logarítmica.
 
@@ -113,20 +122,19 @@ npm run build
 - Detalle de los 5 Gizmos conocidos (Sprite Locator, Lucky Locator, Golden Firework, Extraction Accelerator, Portable Extractor).
 
 ### 9. Planificador de la Tienda Pirata
-- Modelado de las 2 ventanas de 14 días (una en 2026 y otra en 2027).
+- Modelado de las 2 ventanas de 14 días (una en 2026 y otra en 2027) según reportes.
 - Calendario visual interactivo de 14 días y cuenta regresiva.
 - Gestor de Wishlist en paVos (V-Bucks) con cálculo de valor económico total.
-- Detalle de exclusiones confirmadas (dinero real, regalos, suscripciones, restricciones de Sidekicks).
+- Detalle de exclusiones (dinero real, regalos, suscripciones, restricciones de Sidekicks).
 
 ### 10. Minijuego Interactivo de Apertura de Cofres
-- Apertura visual interactiva con animaciones, efectos de partículas con confetti y revelación según las tasas oficiales reales.
+- Apertura visual interactiva con animaciones, efectos de partículas con confetti y revelación según las tasas de referencia.
 
 ### 11. Extras y Transparencia
-- Modo "¿Qué pasaría si Epic aumentara las probabilidades?".
+- Modo "¿Qué pasaría si variasen las probabilidades?".
 - Calculadora de riesgo de terminar la temporada a cero.
-- Página completa de datos y fuentes con enlaces oficiales a Epic Games, Fortnite Status, Fortnite.gg y VGC.
-- Glosario de términos estadísticos.
-- Soporte bilingüe (Español / Inglés) y modo oscuro / claro.
+- Página completa de datos y fuentes públicas de referencia con enlaces y glosario de términos estadísticos.
+- Soporte bilingüe (Español / Inglés) y modo oscuro / claro accesible.
 
 ---
 
@@ -137,8 +145,8 @@ fortnite-treasure-odds/
 ├── src/
 │   ├── types/               # Definiciones de TypeScript estrictas
 │   ├── config/
-│   │   ├── constants.ts     # Denominadores oficiales, multiplicadores y fuentes
-│   │   ├── rewards.ts       # Catálogo inicial de recompensas y Gizmos
+│   │   ├── constants.ts     # Denominadores base, multiplicadores y fuentes de referencia
+│   │   ├── rewards.ts       # Catálogo de recompensas y Gizmos
 │   │   └── locales.ts       # Diccionario i18n (Español / Inglés)
 │   ├── math/
 │   │   ├── probability.ts   # Motor matemático exacto (log1p, expm1, Wilson CI)
@@ -163,7 +171,7 @@ fortnite-treasure-odds/
 │   │   ├── tracker/         # Registro manual y tabla de historial
 │   │   ├── collection/      # Colección y catálogo editable
 │   │   ├── pirateShop/      # Planificador de ventanas y Wishlist
-│   │   ├── sources/         # Fuentes oficiales y glosario
+│   │   ├── sources/         # Fuentes de referencia y glosario
 │   │   └── extras/          # Simulador What-If y calculadora de supervivencia
 │   ├── App.tsx              # Componente principal
 │   ├── main.tsx             # Punto de entrada React 18
@@ -177,7 +185,6 @@ fortnite-treasure-odds/
 
 ---
 
-## ⚖️ Descargo de Responsabilidad
+## 📄 Licencia
 
-*Fortnite es una marca registrada de Epic Games, Inc.* Este software es un proyecto independiente de análisis probabilístico y simulación estocástica desarrollado con fines informativos y educativos. No está afiliado ni respaldado por Epic Games, Inc., y no modifica de ninguna manera los clientes ni los servidores del juego.
-
+Este proyecto está distribuido bajo la licencia [MIT](LICENSE).

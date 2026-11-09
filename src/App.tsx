@@ -290,10 +290,10 @@ export const App: React.FC = () => {
           </div>
           <div className="text-center md:text-right space-y-1">
             <p className="text-slate-400">
-              Datos oficiales de Epic Games del 7 de noviembre de 2026.
+              Tasas de referencia publicadas el 7 de noviembre de 2026.
             </p>
-            <p className="text-[11px] text-slate-600">
-              Proyecto de código abierto independiente. No afiliado a Epic Games.
+            <p className="text-[11px] text-slate-500">
+              Herramienta comunitaria independiente. Sin relación ni afiliación con Epic Games, Inc.
             </p>
           </div>
         </div>

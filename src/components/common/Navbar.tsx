@@ -54,7 +54,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </span>
               </div>
               <p className="text-[11px] text-slate-400 hidden sm:block">
-                Simulador Oficial Cazatesoros &middot; 9 nov 2026
+                Simulador Independiente Cazatesoros &middot; 9 nov 2026
               </p>
             </div>
           </div>
