@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { RewardItem, RewardCategory } from '../../types';
+import { RewardItem } from '../../types';
 import { Card } from '../common/Card';
 import { Badge } from '../common/Badge';
 import {
@@ -9,7 +9,6 @@ import {
   calculatePercentiles,
   calculateExpectedChests,
   formatProbabilityPercentage,
-  formatOddsRatio,
 } from '../../math/probability';
 import {
   LineChart,
@@ -21,29 +20,34 @@ import {
   ResponsiveContainer,
   ReferenceLine,
 } from 'recharts';
-import { Calculator, Sparkles, Clock, Target, TrendingUp, Info } from 'lucide-react';
+import { Calculator, Sparkles, TrendingUp, Info, Share2, Printer, Check } from 'lucide-react';
 import { UserSettings } from '../../storage/localStorage';
-import { DICTIONARY } from '../../config/locales';
 
 interface ExactCalculatorProps {
   rewards: RewardItem[];
   settings: UserSettings;
   loggedChests: number;
+  onShowToast?: (title: string, description?: string) => void;
 }
 
 export const ExactCalculator: React.FC<ExactCalculatorProps> = ({
   rewards,
-  settings,
   loggedChests,
+  onShowToast,
 }) => {
-  const dict = DICTIONARY[settings.lang];
+  // Read initial query params if present
+  const queryParams = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
+  const initialChests = parseInt(queryParams.get('chests') || '1000') || 1000;
+  const initialMult = parseFloat(queryParams.get('mult') || '1.0') || 1.0;
+  const initialRewardId = queryParams.get('reward') || 'pirate-shop-access';
 
   // State
-  const [selectedRewardId, setSelectedRewardId] = useState<string>('pirate-shop-access');
-  const [chests, setChests] = useState<number>(1000);
-  const [multiplier, setMultiplier] = useState<number>(1.0);
-  const [chestsPerMinute, setChestsPerMinute] = useState<number>(0.8); // Realistic looting speed
+  const [selectedRewardId, setSelectedRewardId] = useState<string>(initialRewardId);
+  const [chests, setChests] = useState<number>(initialChests);
+  const [multiplier, setMultiplier] = useState<number>(initialMult);
+  const [chestsPerMinute] = useState<number>(0.8);
   const [logScale, setLogScale] = useState<boolean>(false);
+  const [copiedLink, setCopiedLink] = useState(false);
 
   // Selected reward details
   const currentReward = useMemo(() => {
@@ -59,23 +63,7 @@ export const ExactCalculator: React.FC<ExactCalculatorProps> = ({
   const medianChests = calculateChestsForTargetProbability(0.5, pSingle);
   const percentiles = useMemo(() => calculatePercentiles(pSingle), [pSingle]);
 
-  // Target milestones
-  const targetMilestones = [
-    { target: 0.2, label: '20%' },
-    { target: 0.5, label: '50%' },
-    { target: 0.8, label: '80%' },
-    { target: 0.9, label: '90%' },
-    { target: 0.95, label: '95%' },
-    { target: 0.99, label: '99%' },
-  ].map((m) => ({
-    ...m,
-    chestsNeeded: calculateChestsForTargetProbability(m.target, pSingle),
-  }));
-
-  // Estimated playtime
-  const estimatedHours = (chests / Math.max(0.1, chestsPerMinute * 60)).toFixed(1);
-
-  // Chart data: 25 evenly spaced points up to 2x current chests or median
+  // Chart data
   const chartPoints = useMemo(() => {
     const maxN = Math.max(chests * 1.5, medianChests > 0 && medianChests < 500000 ? medianChests * 1.2 : chests * 2, 2000);
     const step = Math.max(1, Math.floor(maxN / 30));
@@ -98,6 +86,26 @@ export const ExactCalculator: React.FC<ExactCalculatorProps> = ({
     return data;
   }, [currentReward, chests, pSingle, medianChests]);
 
+  const handleCopyShareLink = () => {
+    const url = new URL(window.location.origin + window.location.pathname);
+    url.searchParams.set('tab', 'calculator');
+    url.searchParams.set('reward', selectedRewardId);
+    url.searchParams.set('chests', chests.toString());
+    url.searchParams.set('mult', multiplier.toString());
+
+    navigator.clipboard.writeText(url.toString()).then(() => {
+      setCopiedLink(true);
+      if (onShowToast) {
+        onShowToast('¡Enlace copiado!', 'Puedes compartir este cálculo exacto en tus redes sociales.');
+      }
+      setTimeout(() => setCopiedLink(false), 2000);
+    });
+  };
+
+  const handlePrint = () => {
+    window.print();
+  };
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -111,7 +119,27 @@ export const ExactCalculator: React.FC<ExactCalculatorProps> = ({
             Fórmulas numéricamente estables: P = -Math.expm1(n &times; Math.log1p(-p)). Sin aproximaciones prematuras.
           </p>
         </div>
+
         <div className="flex items-center space-x-2">
+          {/* Share Link Button */}
+          <button
+            onClick={handleCopyShareLink}
+            className="flex items-center space-x-1 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition-colors"
+            title="Copiar enlace con este cálculo para compartir"
+          >
+            {copiedLink ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Share2 className="w-3.5 h-3.5 text-amber-400" />}
+            <span>{copiedLink ? '¡Copiado!' : 'Compartir Cálculo'}</span>
+          </button>
+
+          {/* Print Button */}
+          <button
+            onClick={handlePrint}
+            className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-colors"
+            title="Imprimir resumen de probabilidades"
+          >
+            <Printer className="w-4 h-4" />
+          </button>
+
           <Badge variant="source" source="public_data">Tasas de Referencia</Badge>
           <Badge variant="rarity" rarity={currentReward.rarity}>{currentReward.rarity}</Badge>
         </div>
@@ -375,7 +403,7 @@ export const ExactCalculator: React.FC<ExactCalculatorProps> = ({
         {/* Percentiles Table */}
         <Card className="p-5 bg-slate-900/90 border-slate-800">
           <h3 className="text-sm font-bold text-slate-100 flex items-center gap-2 mb-3">
-            <Target className="w-4 h-4 text-cyan-400" />
+            <Sparkles className="w-4 h-4 text-cyan-400" />
             Percentiles Estadísticos de Cofres Necesarios
           </h3>
           <div className="overflow-x-auto">
@@ -470,4 +498,3 @@ export const ExactCalculator: React.FC<ExactCalculatorProps> = ({
     </div>
   );
 };
-

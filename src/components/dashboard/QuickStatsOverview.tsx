@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ChestTrackerSession } from '../../types';
 import { Card } from '../common/Card';
-import { TrendingUp, Users, Clock, AlertTriangle, ShieldCheck } from 'lucide-react';
+import { AlertTriangle, RotateCcw, Plus, Check } from 'lucide-react';
 import { formatProbabilityPercentage } from '../../math/probability';
 import { calculateMixedSessionsProbability } from '../../math/probability';
 
@@ -9,38 +9,60 @@ interface QuickStatsOverviewProps {
   sessions: ChestTrackerSession[];
   onQuickAddChests: (amount: number) => void;
   onNavigateToTracker: () => void;
+  onOpenResetModal: () => void;
 }
 
 export const QuickStatsOverview: React.FC<QuickStatsOverviewProps> = ({
   sessions,
   onQuickAddChests,
   onNavigateToTracker,
+  onOpenResetModal,
 }) => {
+  const [customChestAmount, setCustomChestAmount] = useState<number>(25);
+
   const totalChests = sessions.reduce((sum, s) => sum + s.individualChests, 0);
   const totalHours = sessions.reduce((sum, s) => sum + s.durationMinutes, 0) / 60;
   const chestsPerMinute = totalHours > 0 ? (totalChests / (totalHours * 60)).toFixed(2) : '0';
 
-  // Calculate cumulative historical probability across all logged sessions
+  // Calculate cumulative probability across all logged sessions
   const sessionEntries = sessions.map((s) => ({
     chests: s.individualChests,
     p: (1 / 137500) * (s.multiplier || 1.0),
   }));
   const cumulativeHistoricalOdds = calculateMixedSessionsProbability(sessionEntries);
 
+  const handleAddCustom = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (customChestAmount > 0) {
+      onQuickAddChests(customChestAmount);
+    }
+  };
+
   return (
     <div className="space-y-4">
       {/* Cards Grid */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <Card className="p-4 bg-slate-900/90 border-slate-800">
-          <div className="text-xs text-slate-400">Total Cofres Registrados</div>
-          <div className="text-2xl font-gaming font-bold text-slate-100 mt-1">
-            {totalChests.toLocaleString('es-ES')}
+        <Card className="p-4 bg-slate-900/90 border-slate-800 flex flex-col justify-between">
+          <div>
+            <div className="text-xs text-slate-400">Total Cofres Registrados</div>
+            <div className="text-2xl font-gaming font-bold text-slate-100 mt-1">
+              {totalChests.toLocaleString('es-ES')}
+            </div>
+            <div className="text-[11px] text-slate-500 mt-0.5">En {sessions.length} partidas</div>
           </div>
-          <div className="text-[11px] text-slate-500 mt-1">En {sessions.length} partidas</div>
+          {totalChests > 0 && (
+            <button
+              onClick={onOpenResetModal}
+              className="text-[11px] text-rose-400 hover:text-rose-300 flex items-center gap-1 mt-2 transition-colors"
+            >
+              <RotateCcw className="w-3 h-3" />
+              <span>Resetear estadísticas</span>
+            </button>
+          )}
         </Card>
 
         <Card className="p-4 bg-slate-900/90 border-slate-800">
-          <div className="text-xs text-slate-400">Probabilidad Histórica</div>
+          <div className="text-xs text-slate-400">Probabilidad Acumulada</div>
           <div className="text-2xl font-gaming font-bold text-emerald-400 mt-1">
             {formatProbabilityPercentage(cumulativeHistoricalOdds, 4)}
           </div>
@@ -56,23 +78,44 @@ export const QuickStatsOverview: React.FC<QuickStatsOverviewProps> = ({
         </Card>
 
         <Card className="p-4 bg-slate-900/90 border-slate-800 flex flex-col justify-between">
-          <div className="text-xs text-slate-400">Registro Rápido</div>
+          <div className="text-xs text-slate-400">Registro Rápido de Cofres</div>
+
+          {/* Quick presets */}
           <div className="flex items-center space-x-1.5 mt-2">
             {[1, 5, 10].map((amt) => (
               <button
                 key={amt}
                 onClick={() => onQuickAddChests(amt)}
-                className="flex-1 py-1.5 rounded bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 text-xs font-bold border border-amber-500/30 transition-all active:scale-95"
+                className="flex-1 py-1 rounded bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 text-xs font-bold border border-amber-500/30 transition-all active:scale-95"
               >
                 +{amt}
               </button>
             ))}
           </div>
+
+          {/* Custom exact amount input */}
+          <form onSubmit={handleAddCustom} className="flex items-center space-x-1.5 mt-2">
+            <input
+              type="number"
+              min="1"
+              max="5000"
+              value={customChestAmount}
+              onChange={(e) => setCustomChestAmount(Math.max(1, parseInt(e.target.value) || 1))}
+              className="w-16 bg-slate-950 border border-slate-700 rounded px-1.5 py-0.5 text-xs text-slate-100 font-gaming font-bold"
+            />
+            <button
+              type="submit"
+              className="flex-1 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] font-semibold border border-slate-700 transition-colors"
+            >
+              + Añadir
+            </button>
+          </form>
+
           <button
             onClick={onNavigateToTracker}
-            className="text-[10px] text-right text-slate-400 hover:text-amber-300 underline mt-1"
+            className="text-[10px] text-right text-slate-400 hover:text-amber-300 underline mt-1.5"
           >
-            Ver Historial Detallado &rarr;
+            Ver Historial Completo &rarr;
           </button>
         </Card>
       </div>
@@ -91,4 +134,3 @@ export const QuickStatsOverview: React.FC<QuickStatsOverviewProps> = ({
     </div>
   );
 };
-

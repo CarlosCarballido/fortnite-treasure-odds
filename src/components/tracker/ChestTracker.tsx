@@ -1,19 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { ChestTrackerSession, RewardItem } from '../../types';
 import { Card } from '../common/Card';
-import { Badge } from '../common/Badge';
 import {
-  Plus,
   RotateCcw,
   Download,
-  Upload,
   Trash2,
-  Calendar,
   Clock,
-  Users,
-  Sparkles,
-  AlertTriangle,
+  Plus,
   FileSpreadsheet,
+  Filter,
 } from 'lucide-react';
 import { calculateMixedSessionsProbability, formatProbabilityPercentage } from '../../math/probability';
 import { exportTrackerAsCSV, exportAllDataAsJSON } from '../../storage/exportImport';
@@ -23,6 +18,7 @@ interface ChestTrackerProps {
   onAddSession: (session: ChestTrackerSession) => void;
   onDeleteSession: (sessionId: string) => void;
   onUndoLastSession: () => void;
+  onOpenResetModal: () => void;
   rewards: RewardItem[];
 }
 
@@ -31,10 +27,14 @@ export const ChestTracker: React.FC<ChestTrackerProps> = ({
   onAddSession,
   onDeleteSession,
   onUndoLastSession,
+  onOpenResetModal,
   rewards,
 }) => {
   // Modal / Form state for custom session
   const [isAddingCustom, setIsAddingCustom] = useState(false);
+  const [filterMode, setFilterMode] = useState<string>('all');
+  const [customChestInput, setCustomChestInput] = useState<number>(20);
+
   const [formMode, setFormMode] = useState<'solo' | 'duo' | 'trio' | 'squad'>('squad');
   const [formIndividualChests, setFormIndividualChests] = useState(12);
   const [formGroupChests, setFormGroupChests] = useState(40);
@@ -86,6 +86,12 @@ export const ChestTracker: React.FC<ChestTrackerProps> = ({
     setFormRewardsWon([]);
   };
 
+  // Filtered sessions
+  const filteredSessions = useMemo(() => {
+    if (filterMode === 'all') return sessions;
+    return sessions.filter((s) => s.gameMode === filterMode);
+  }, [sessions, filterMode]);
+
   // Aggregated statistics
   const totalChests = sessions.reduce((sum, s) => sum + s.individualChests, 0);
   const normalChests = sessions.filter((s) => s.multiplier === 1.0).reduce((sum, s) => sum + s.individualChests, 0);
@@ -94,7 +100,7 @@ export const ChestTracker: React.FC<ChestTrackerProps> = ({
   const totalHours = totalDurationMinutes / 60;
   const chestsPerMin = totalDurationMinutes > 0 ? (totalChests / totalDurationMinutes).toFixed(2) : '0';
 
-  // Calculate cumulative historical probability
+  // Calculate cumulative probability
   const sessionEntries = sessions.map((s) => ({
     chests: s.individualChests,
     p: (1 / 137500) * s.multiplier,
@@ -108,7 +114,7 @@ export const ChestTracker: React.FC<ChestTrackerProps> = ({
         <div>
           <h2 className="text-2xl font-gaming font-bold text-slate-100 flex items-center gap-2">
             <Clock className="w-6 h-6 text-amber-400" />
-            Registro y Tracker Real de Cofres
+            Registro y Tracker de Cofres
           </h2>
           <p className="text-xs text-slate-400">
             Anota tus partidas en tiempo real. Persistencia local en navegador sin registro.
@@ -121,35 +127,64 @@ export const ChestTracker: React.FC<ChestTrackerProps> = ({
             onClick={() => handleQuickAdd(1)}
             className="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow transition-all active:scale-95"
           >
-            +1 Cofre
+            +1
           </button>
           <button
             onClick={() => handleQuickAdd(5)}
             className="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow transition-all active:scale-95"
           >
-            +5 Cofres
+            +5
           </button>
           <button
             onClick={() => handleQuickAdd(10)}
             className="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow transition-all active:scale-95"
           >
-            +10 Cofres
+            +10
           </button>
+
+          {/* Add custom amount */}
+          <div className="flex items-center space-x-1">
+            <input
+              type="number"
+              min="1"
+              value={customChestInput}
+              onChange={(e) => setCustomChestInput(Math.max(1, parseInt(e.target.value) || 1))}
+              className="w-16 bg-slate-950 border border-slate-700 rounded px-2 py-1 text-xs text-slate-100 font-bold font-gaming"
+            />
+            <button
+              onClick={() => handleQuickAdd(customChestInput)}
+              className="px-2.5 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition-colors"
+            >
+              + Añadir
+            </button>
+          </div>
+
           <button
             onClick={() => setIsAddingCustom(true)}
             className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-bold text-xs shadow transition-all active:scale-95 flex items-center gap-1"
           >
             <Plus className="w-3.5 h-3.5" />
-            <span>Añadir Partida</span>
+            <span>Partida Completa</span>
           </button>
+
           {sessions.length > 0 && (
-            <button
-              onClick={onUndoLastSession}
-              className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-colors"
-              title="Deshacer último registro"
-            >
-              <RotateCcw className="w-4 h-4" />
-            </button>
+            <>
+              <button
+                onClick={onUndoLastSession}
+                className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-colors"
+                title="Deshacer último registro"
+              >
+                <RotateCcw className="w-4 h-4" />
+              </button>
+              <button
+                onClick={onOpenResetModal}
+                className="px-2.5 py-1.5 rounded-lg bg-rose-950/40 hover:bg-rose-900/60 text-rose-300 border border-rose-500/30 text-xs font-semibold transition-colors flex items-center gap-1"
+                title="Reiniciar contador de estadísticas"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+                <span>Resetear</span>
+              </button>
+            </>
           )}
         </div>
       </div>
@@ -184,20 +219,28 @@ export const ChestTracker: React.FC<ChestTrackerProps> = ({
         </Card>
       </div>
 
-      {/* Gambler's Fallacy Notice */}
-      <div className="p-3.5 rounded-xl bg-amber-950/20 border border-amber-500/30 flex items-start space-x-3 text-xs text-slate-300">
-        <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
-        <div>
-          <strong className="text-amber-300">Aclaración estadística:</strong> La probabilidad acumulada histórica{' '}
-          ({formatProbabilityPercentage(cumulativeHistoricalProbability, 4)}) refleja la probabilidad a priori de haber
-          encontrado la ficha a lo largo de todos tus cofres combinados. <strong>No modifica la probabilidad del siguiente cofre</strong>,
-          que sigue siendo estrictamente 1 en 137.500 (o la tasa bonificada en vigor).
+      {/* Filter and Export Bar */}
+      <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-800 text-xs">
+        {/* Mode Filter */}
+        <div className="flex items-center space-x-1.5">
+          <Filter className="w-3.5 h-3.5 text-slate-400" />
+          <span className="text-slate-400 font-medium">Filtrar:</span>
+          {['all', 'solo', 'duo', 'trio', 'squad'].map((mode) => (
+            <button
+              key={mode}
+              onClick={() => setFilterMode(mode)}
+              className={`px-2 py-0.5 rounded uppercase font-semibold text-[10px] transition-colors ${
+                filterMode === mode
+                  ? 'bg-amber-500 text-slate-950 font-bold'
+                  : 'bg-slate-800 text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              {mode === 'all' ? 'Todos' : mode}
+            </button>
+          ))}
         </div>
-      </div>
 
-      {/* Export / Import Bar */}
-      <div className="flex items-center justify-between text-xs text-slate-400 pt-2 border-t border-slate-800">
-        <span>Historial de Sesiones Registradas ({sessions.length})</span>
+        {/* Export Buttons */}
         <div className="flex items-center space-x-2">
           <button
             onClick={exportTrackerAsCSV}
@@ -218,9 +261,11 @@ export const ChestTracker: React.FC<ChestTrackerProps> = ({
 
       {/* Sessions History Table */}
       <Card className="p-4 bg-slate-900/90 border-slate-800 overflow-hidden">
-        {sessions.length === 0 ? (
+        {filteredSessions.length === 0 ? (
           <div className="py-12 text-center text-slate-500 text-xs">
-            No has registrado partidas todavía. Usa los botones rápidos superiores (+1, +5, +10) o haz clic en "Añadir Partida".
+            {sessions.length === 0
+              ? 'No has registrado partidas todavía. Usa los botones rápidos superiores o añade una partida.'
+              : 'No hay partidas que coincidan con el filtro seleccionado.'}
           </div>
         ) : (
           <div className="overflow-x-auto">
@@ -238,7 +283,7 @@ export const ChestTracker: React.FC<ChestTrackerProps> = ({
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-800/60">
-                {sessions.map((s) => (
+                {filteredSessions.map((s) => (
                   <tr key={s.id} className="hover:bg-slate-800/30">
                     <td className="py-2 text-slate-400 whitespace-nowrap">
                       {new Date(s.date).toLocaleString('es-ES', { dateStyle: 'short', timeStyle: 'short' })}
@@ -402,7 +447,7 @@ export const ChestTracker: React.FC<ChestTrackerProps> = ({
                 <label className="block text-slate-300 font-medium mb-1">Notas de la partida (opcional)</label>
                 <input
                   type="text"
-                  placeholder="Ej. Caída en Carretes Calurosos, buen loot"
+                  placeholder="Ej. Buena partida, Carretes Calurosos"
                   value={formNotes}
                   onChange={(e) => setFormNotes(e.target.value)}
                   className="w-full bg-slate-950 border border-slate-700 rounded px-2.5 py-1.5 text-slate-100"
@@ -431,4 +476,3 @@ export const ChestTracker: React.FC<ChestTrackerProps> = ({
     </div>
   );
 };
-

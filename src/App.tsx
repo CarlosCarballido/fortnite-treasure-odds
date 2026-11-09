@@ -14,6 +14,8 @@ import { RewardCollection } from './components/collection/RewardCollection';
 import { PirateShopPlanner } from './components/pirateShop/PirateShopPlanner';
 import { SourcesView } from './components/sources/SourcesView';
 import { BackupModal } from './components/common/BackupModal';
+import { ResetStatsModal } from './components/common/ResetStatsModal';
+import { ToastContainer, ToastMessage } from './components/common/Toast';
 import { WhatIfSimulator } from './components/extras/WhatIfSimulator';
 import { SurvivalCalculator } from './components/extras/SurvivalCalculator';
 
@@ -32,7 +34,6 @@ import {
   saveSettings,
   UserSettings,
 } from './storage/localStorage';
-import { DICTIONARY } from './config/locales';
 
 export const App: React.FC = () => {
   // Settings & Theme
@@ -53,9 +54,25 @@ export const App: React.FC = () => {
   const [sessions, setSessions] = useState<ChestTrackerSession[]>(loadTrackerSessions);
   const [shopPlan, setShopPlan] = useState<PirateShopPlan>(loadShopPlan);
 
-  // Modals
+  // Modals & Popups
   const [isChestGameOpen, setIsChestGameOpen] = useState(false);
   const [isBackupModalOpen, setIsBackupModalOpen] = useState(false);
+  const [isResetModalOpen, setIsResetModalOpen] = useState(false);
+
+  // Toasts
+  const [toasts, setToasts] = useState<ToastMessage[]>([]);
+
+  const showToast = (title: string, description?: string, type: 'success' | 'info' | 'warning' = 'success') => {
+    const id = `toast-${Date.now()}-${Math.random().toString(36).substr(2, 4)}`;
+    setToasts((prev) => [...prev, { id, title, description, type }]);
+    setTimeout(() => {
+      setToasts((prev) => prev.filter((t) => t.id !== id));
+    }, 4000);
+  };
+
+  const dismissToast = (id: string) => {
+    setToasts((prev) => prev.filter((t) => t.id !== id));
+  };
 
   // Sync settings theme to document HTML class
   useEffect(() => {
@@ -113,6 +130,7 @@ export const App: React.FC = () => {
       saveTrackerSessions(next);
       return next;
     });
+    showToast('Partida registrada', `+${newSession.individualChests} cofres añadidos a tus estadísticas.`);
   };
 
   const handleDeleteSession = (sessionId: string) => {
@@ -121,6 +139,7 @@ export const App: React.FC = () => {
       saveTrackerSessions(next);
       return next;
     });
+    showToast('Partida eliminada', 'Se ha eliminado el registro seleccionado.', 'info');
   };
 
   const handleUndoLastSession = () => {
@@ -130,6 +149,7 @@ export const App: React.FC = () => {
       saveTrackerSessions(next);
       return next;
     });
+    showToast('Deshecho', 'Se ha revertido el último registro de cofres.', 'info');
   };
 
   const handleQuickAddChests = (amount: number) => {
@@ -148,6 +168,28 @@ export const App: React.FC = () => {
     handleAddSession(newSession);
   };
 
+  // Reset Handlers (QoL)
+  const handleResetTrackerOnly = () => {
+    setSessions([]);
+    saveTrackerSessions([]);
+    showToast('Contador reiniciado', 'Todos tus registros y cofres se han puesto a 0.');
+  };
+
+  const handleResetCollectionOnly = () => {
+    setObtainedIds([]);
+    saveObtainedRewards([]);
+    showToast('Colección reiniciada', 'Todas las recompensas vuelven a estar marcadas como pendientes.');
+  };
+
+  const handleResetAllData = () => {
+    localStorage.clear();
+    setSessions([]);
+    setObtainedIds([]);
+    setRewards(INITIAL_REWARDS);
+    setShopPlan({ wishlist: [] });
+    showToast('Restablecimiento completo', 'Se han borrado todas las estadísticas locales.', 'warning');
+  };
+
   const handleReloadAllData = () => {
     setSessions(loadTrackerSessions());
     setObtainedIds(loadObtainedRewards());
@@ -159,6 +201,7 @@ export const App: React.FC = () => {
     } else {
       setRewards(INITIAL_REWARDS);
     }
+    showToast('Datos sincronizados', 'Se ha cargado la copia de seguridad.');
   };
 
   const totalLoggedChests = sessions.reduce((sum, s) => sum + s.individualChests, 0);
@@ -192,6 +235,7 @@ export const App: React.FC = () => {
               sessions={sessions}
               onQuickAddChests={handleQuickAddChests}
               onNavigateToTracker={() => handleSelectTab('tracker')}
+              onOpenResetModal={() => setIsResetModalOpen(true)}
             />
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <WhatIfSimulator />
@@ -205,6 +249,7 @@ export const App: React.FC = () => {
             rewards={rewards}
             settings={settings}
             loggedChests={totalLoggedChests}
+            onShowToast={(title, desc) => showToast(title, desc, 'success')}
           />
         )}
 
@@ -230,6 +275,7 @@ export const App: React.FC = () => {
             onAddSession={handleAddSession}
             onDeleteSession={handleDeleteSession}
             onUndoLastSession={handleUndoLastSession}
+            onOpenResetModal={() => setIsResetModalOpen(true)}
             rewards={rewards}
           />
         )}
@@ -268,6 +314,20 @@ export const App: React.FC = () => {
             handleToggleObtained(rId);
           }
         }}
+        onLogChestsToTracker={(amount, dropsWon) => {
+          handleQuickAddChests(amount);
+          showToast('Cofres guardados en tracker', `Se han registrado ${amount} cofres abiertos en tu historial.`);
+        }}
+      />
+
+      {/* Reset Stats Modal (QoL) */}
+      <ResetStatsModal
+        isOpen={isResetModalOpen}
+        onClose={() => setIsResetModalOpen(false)}
+        onResetTrackerOnly={handleResetTrackerOnly}
+        onResetCollectionOnly={handleResetCollectionOnly}
+        onResetAllData={handleResetAllData}
+        totalLoggedChests={totalLoggedChests}
       />
 
       {/* Data Backup & Export/Import Modal */}
@@ -276,6 +336,9 @@ export const App: React.FC = () => {
         onClose={() => setIsBackupModalOpen(false)}
         onDataRestored={handleReloadAllData}
       />
+
+      {/* Toast Notification Container */}
+      <ToastContainer toasts={toasts} onDismiss={dismissToast} />
 
       {/* Footer */}
       <footer className="mt-16 border-t border-slate-800/80 py-8 bg-[#050811] text-xs text-slate-500">
@@ -301,4 +364,3 @@ export const App: React.FC = () => {
     </div>
   );
 };
-
