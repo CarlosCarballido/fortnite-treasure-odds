@@ -1,8 +1,26 @@
 {
   "name": "fortnite-treasure-odds",
-  "private": true,
   "version": "1.0.0",
+  "description": "Calculadora matemática y simulador Monte Carlo de probabilidades oficiales de Fortnite Treasure Hunters (Cazatesoros) 2026.",
   "type": "module",
+  "author": "Carlos Carballido",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CarlosCarballido/fortnite-treasure-odds.git"
+  },
+  "keywords": [
+    "fortnite",
+    "fortnite-odds",
+    "treasure-hunters",
+    "pirate-shop-access",
+    "monte-carlo",
+    "probability-calculator",
+    "react",
+    "typescript",
+    "vite",
+    "recharts"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
