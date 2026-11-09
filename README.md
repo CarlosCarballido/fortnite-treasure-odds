@@ -1,8 +1,9 @@
-# FORTNITE TREASURE ODDS — SIMULADOR DEFINITIVO
 
-> **Simulador probabilístico profesional y calculadora matemática comunitaria e independiente para el evento Cazatesoros (Treasure Hunters) 2026.**
+# FORTNITE TREASURE ODDS — ULTIMATE SIMULATOR
 
-![Fortnite Treasure Odds](https://img.shields.io/badge/Versi%C3%B3n-1.0.0-gold?style=for-the-badge)
+> **Professional probability simulator and independent, community-driven mathematical calculator for the 2026 Treasure Hunters event.**
+
+![Fortnite Treasure Odds](https://img.shields.io/badge/Version-1.0.0-gold?style=for-the-badge)
 ![React](https://img.shields.io/badge/React-18.3-61dafb?style=for-the-badge&logo=react)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178c6?style=for-the-badge&logo=typescript)
 ![Vite](https://img.shields.io/badge/Vite-6.0-646cff?style=for-the-badge&logo=vite)
@@ -11,171 +12,193 @@
 
 ---
 
-## ⚖️ Descargo de Responsabilidad y Términos Legales
+## ⚖️ Disclaimer and Legal Terms
 
-> **IMPORTANTE:**
-> 
-> - **Fortnite** es una marca comercial registrada de **Epic Games, Inc.**
-> - Este proyecto es una **herramienta comunitaria independiente y de código abierto**, creada por fans con propósitos estrictamente analíticos, educativos y estadísticos.
-> - Este software es un proyecto independiente desarrollado sin ninguna relación ni vinculación con **Epic Games, Inc.**, no habiendo sido patrocinado, certificado, respaldado ni asociado por dicha compañía ni sus entidades afiliadas.
-> - La aplicación funciona **100% en el navegador del cliente** de manera local (`localStorage`). No se conecta a servidores de juego, no interactúa con archivos de Fortnite, no altera partidas ni concede objetos reales en cuentas de jugadores.
-
----
-
-## 📌 Descripción del Proyecto
-
-**Fortnite Treasure Odds** es una aplicación web analítica de alto rendimiento orientada a jugadores de la comunidad, analistas y creadores de contenido. Permite simular y calcular con rigor matemático las probabilidades de conseguir la **Ficha de Acceso a la Tienda Pirata (Pirate Shop Access)** y las distintas recompensas semanales del evento Cazatesoros.
-
-La aplicación funciona **completamente en el cliente (sin backend, sin APIs de pago, sin registro y sin claves secretas)**.
+> **IMPORTANT:**
+>
+> - **Fortnite** is a registered trademark of **Epic Games, Inc.**
+> - This project is an **independent, open-source, community-driven tool**, created by fans strictly for analytical, educational, and statistical purposes.
+> - This software is an independent project developed without any relationship or affiliation with **Epic Games, Inc.** It is not sponsored, certified, endorsed, or associated with the company or any of its affiliates.
+> - The application runs **100% locally in the user's browser**, using `localStorage`. It does not connect to game servers, interact with Fortnite files, modify matches, or grant real items to player accounts.
 
 ---
 
-## 🎲 Tasas y Probabilidades de Referencia Publicadas (7 de noviembre de 2026)
+## 📌 Project Overview
 
-Fecha de referencia del simulador: **9 de noviembre de 2026** (Semana 2 activa: Solid Gold Lil Uzi Vert & Cadillac CT5-V Blackwing dorado).
+**Fortnite Treasure Odds** is a high-performance analytical web application designed for community players, analysts, and content creators. It allows users to simulate and mathematically calculate the probabilities of obtaining **Pirate Shop Access** and the various weekly rewards available during the Treasure Hunters event.
 
-| Recompensa | Rareza | Denominador Base | Probabilidad Base por Cofre |
+The application runs **entirely on the client side (no backend, no paid APIs, no registration, and no secret keys)**.
+
+---
+
+## 🎲 Published Reference Drop Rates and Probabilities (November 7, 2026)
+
+Simulator reference date: **November 9, 2026** (Week 2 active: Solid Gold Lil Uzi Vert & Gold Cadillac CT5-V Blackwing).
+
+| Reward | Rarity | Base Denominator | Base Probability per Chest |
 |:---|:---:|:---:|:---:|
-| **Pirate Shop Access** | Supreme | `137.500` | `~0,00072727%` |
-| **Aspecto dorado semanal** | Supreme | `1.562.500` | `~0,00006400%` |
-| **Vehículo y vinilo semanal** | Supreme | `7.813` | `~0,01279918%` |
-| **Pico o mochila semanal** | Major | `568` | `~0,17605634%` |
-| **Jam Track semanal** | Standard | `391` | `~0,25575448%` |
-| **Pantalla de carga semanal** | Standard | `272` | `~0,36764706%` |
-| **Gizmo (cualquiera de los 5)** | Standard | `127` | `~0,78740157%` |
+| **Pirate Shop Access** | Supreme | `137,500` | `~0.00072727%` |
+| **Weekly Golden Skin** | Supreme | `1,562,500` | `~0.00006400%` |
+| **Weekly Vehicle and Wrap** | Supreme | `7,813` | `~0.01279918%` |
+| **Weekly Pickaxe or Back Bling** | Major | `568` | `~0.17605634%` |
+| **Weekly Jam Track** | Standard | `391` | `~0.25575448%` |
+| **Weekly Loading Screen** | Standard | `272` | `~0.36764706%` |
+| **Gizmo (any of the 5)** | Standard | `127` | `~0.78740157%` |
 
-> **Nota matemática sobre Gizmos:** La probabilidad de `1/127` corresponde a obtener **un Gizmo cualquiera**, no a cada uno de los 5 individualmente.
-> **Regla de duplicados:** Los tesoros no pueden obtenerse repetidamente, salvo los Gizmos, que son acumulables.
+> **Mathematical note about Gizmos:** The `1/127` probability represents obtaining **any Gizmo**, not each of the five individually.
+>
+> **Duplicate rule:** Treasure rewards cannot be obtained more than once, except for Gizmos, which are stackable.
 
 ---
 
-## 🚀 Requisitos y Comandos de Ejecución
+## 🚀 Requirements and Setup Commands
 
-### 1. Instalación de dependencias:
+### 1. Install dependencies
+
 ```bash
 npm install
 ```
 
-### 2. Ejecutar servidor de desarrollo:
+### 2. Start the development server
+
 ```bash
 npm run dev
 ```
-La aplicación se abrirá en `http://localhost:5173`.
 
-### 3. Ejecutar pruebas unitarias matemáticas:
+The application will be available at `http://localhost:5173`.
+
+### 3. Run mathematical unit tests
+
 ```bash
 npm test
 ```
-Ejecuta los 28 tests con Vitest, validando las fórmulas numéricamente estables (`expm1`, `log1p`), casos de prueba analíticos, percentiles, escuadrones y PRNG reproducible.
 
-### 4. Compilar para producción:
+Runs all 28 tests using Vitest, validating numerically stable formulas (`expm1`, `log1p`), analytical test cases, percentiles, squad calculations, and reproducible PRNG behavior.
+
+### 4. Build for production
+
 ```bash
 npm run build
 ```
 
 ---
 
-## 🔬 Módulos y Funcionalidades
+## 🔬 Modules and Features
 
-### 1. Dashboard Principal
-- Tarjeta destacada de la **Ficha de la Tienda Pirata** con probabilidad por cofre, cofres registrados, hito de la mediana y selector de multiplicador.
-- Banner de la rotación actual: **Semana 2 (8–15 de noviembre de 2026)** con Solid Gold Lil Uzi Vert y Cadillac CT5-V Blackwing.
-- Aviso educativo riguroso sobre la **Falacia del Jugador**.
+### 1. Main Dashboard
 
-### 2. Calculadora de Probabilidades Exactas (`ExactCalculator.tsx`)
-- Fórmulas numéricamente estables para evitar cancelación catastrófica:
+- Featured **Pirate Shop Access** card displaying probability per chest, recorded chests, median milestone, and multiplier selector.
+- Current rotation banner: **Week 2 (November 8–15, 2026)** featuring Solid Gold Lil Uzi Vert and Cadillac CT5-V Blackwing.
+- Rigorous educational explanation of the **Gambler's Fallacy**.
+
+### 2. Exact Probability Calculator (`ExactCalculator.tsx`)
+
+- Numerically stable formulas to prevent catastrophic cancellation:
+
   $$P = 1 - (1 - p)^n = -\text{Math.expm1}(n \cdot \text{Math.log1p}(-p))$$
-- Percentiles estadísticos P10, P25, P50 (mediana: **95.308 cofres** sin bono, **47.654 cofres** con $\times 2$), P75, P90 (**316.605 cofres**), P95 y P99.
-- Gráficos interactivos con Recharts en escala lineal y logarítmica.
 
-### 3. Simulador Monte Carlo (Web Workers)
-- Ejecución en segundo plano mediante un **Web Worker dedicado** (`src/workers/monteCarlo.worker.ts`), permitiendo simular hasta 100.000 o 1.000.000 de intentos sin bloquear la interfaz.
-- Optimización stocástica con **muestreo geométrico**:
+- Statistical percentiles P10, P25, P50 (median: **95,308 chests** without a bonus, **47,654 chests** with a $\times 2$ multiplier), P75, P90 (**316,605 chests**), P95, and P99.
+- Interactive charts powered by Recharts, supporting both linear and logarithmic scales.
+
+### 3. Monte Carlo Simulator (Web Workers)
+
+- Background execution through a **dedicated Web Worker** (`src/workers/monteCarlo.worker.ts`), allowing simulations of up to 100,000 or 1,000,000 attempts without blocking the user interface.
+- Stochastic optimization using **geometric sampling**:
+
   $$K = \lceil \ln(1 - U) / \ln(1 - p) \rceil$$
-- Intervalo de confianza de **Wilson Score al 95%**, matemáticamente robusto incluso cuando se obtienen 0 éxitos.
-- Generador pseudoaleatorio reproducible basado en semilla (Mulberry32).
 
-### 4. Simulador de Escuadrones
-- Modos Solo, Dúo, Trío y Escuadrón (4 jugadores).
-- Control de cofres por partida, partidas jugadas y tiempo medio.
-- Factor de solapamiento y redundancia de exploración ($\alpha \in [0, 0.5]$).
-- Demuestra matemáticamente que la ventaja del escuadrón surge de abrir **más cofres únicos**, y no de multiplicar la probabilidad de un cofre individual.
+- **95% Wilson Score confidence interval**, mathematically robust even when zero successes are observed.
+- Reproducible seeded pseudorandom number generator (Mulberry32).
 
-### 5. Planificador de Horas del Tesoro
-- "¿Qué probabilidad tengo si juego 2 horas normales y 4 horas con bonus?"
-- Registro histórico de las sesiones del 7 de noviembre de 2026.
-- Ganancia absoluta en puntos porcentuales y ahorro de tiempo.
+### 4. Squad Simulator
 
-### 6. Calculadora Inversa y Objetivos
-- Determina cuántos cofres, partidas y días se necesitan para alcanzar el 20%, 50%, 80%, 90%, 95% o 99%.
-- Calculadora de esfuerzo disponible: "¿Tengo 15 horas esta semana, qué posibilidades tengo?".
-- Evaluación de viabilidad en función del tiempo restante de la temporada.
+- Solo, Duo, Trio, and Squad (4 players) modes.
+- Controls for chests per match, matches played, and average match duration.
+- Exploration overlap and redundancy factor ($\alpha \in [0, 0.5]$).
+- Mathematically demonstrates that the squad advantage comes from opening **more unique chests**, rather than multiplying the drop probability of an individual chest.
 
-### 7. Registro y Tracker Manual de Cofres
-- Botones de acción rápida: `+1`, `+5`, `+10`, `Añadir Partida`, `Deshacer`.
-- Estadísticas de cofres totales, normales, con bonus y probabilidad acumulada histórica.
-- Exportación e importación en **CSV** (compatible con Excel) y **JSON**.
+### 5. Treasure Hours Planner
 
-### 8. Catálogo y Colección Semanal
-- Pestañas por semana (Semana 1, Semana 2 activa, y Semanas 3, 4 y 5 editables).
-- Checklist de premios conseguidos y progreso de colección.
-- Detalle de los 5 Gizmos conocidos (Sprite Locator, Lucky Locator, Golden Firework, Extraction Accelerator, Portable Extractor).
+- "What is my probability if I play 2 regular hours and 4 bonus hours?"
+- Historical session records from November 7, 2026.
+- Absolute probability gains in percentage points and time savings.
 
-### 9. Planificador de la Tienda Pirata
-- Modelado de las 2 ventanas de 14 días (una en 2026 y otra en 2027) según reportes.
-- Calendario visual interactivo de 14 días y cuenta regresiva.
-- Gestor de Wishlist en paVos (V-Bucks) con cálculo de valor económico total.
-- Detalle de exclusiones (dinero real, regalos, suscripciones, restricciones de Sidekicks).
+### 6. Inverse Probability Calculator and Goals
 
-### 10. Minijuego Interactivo de Apertura de Cofres
-- Apertura visual interactiva con animaciones, efectos de partículas con confetti y revelación según las tasas de referencia.
+- Determines how many chests, matches, and days are required to reach a 20%, 50%, 80%, 90%, 95%, or 99% probability.
+- Available-time calculator: "I have 15 hours this week. What are my chances?"
+- Feasibility assessment based on the remaining time in the season.
 
-### 11. Extras y Transparencia
-- Modo "¿Qué pasaría si variasen las probabilidades?".
-- Calculadora de riesgo de terminar la temporada a cero.
-- Página completa de datos y fuentes públicas de referencia con enlaces y glosario de términos estadísticos.
-- Soporte bilingüe (Español / Inglés) y modo oscuro / claro accesible.
+### 7. Manual Chest Tracker and Log
+
+- Quick-action buttons: `+1`, `+5`, `+10`, `Add Match`, `Undo`.
+- Statistics for total chests, regular chests, bonus chests, and historical cumulative probability.
+- **CSV** (Excel-compatible) and **JSON** export and import functionality.
+
+### 8. Weekly Reward Catalog and Collection
+
+- Weekly tabs (Week 1, active Week 2, and editable Weeks 3, 4, and 5).
+- Checklist of obtained rewards and collection progress.
+- Details of the 5 known Gizmos (Sprite Locator, Lucky Locator, Golden Firework, Extraction Accelerator, Portable Extractor).
+
+### 9. Pirate Shop Planner
+
+- Models the two reported 14-day availability windows (one in 2026 and another in 2027).
+- Interactive 14-day visual calendar and countdown timer.
+- V-Bucks wishlist manager with total monetary value calculations.
+- Details of exclusions (real-money purchases, gifts, subscriptions, and Sidekick restrictions).
+
+### 10. Interactive Chest Opening Minigame
+
+- Interactive visual chest opening with animations, confetti particle effects, and reward reveals based on the reference drop rates.
+
+### 11. Extras and Transparency
+
+- "What if the drop rates changed?" simulation mode.
+- Calculator for the risk of finishing the season without obtaining the desired reward.
+- Comprehensive reference data and public sources page, including links and a glossary of statistical terminology.
+- Bilingual support (Spanish / English) and accessible dark / light modes.
 
 ---
 
-## 🛠️ Arquitectura del Software
+## 🛠️ Software Architecture
 
-```
+```text
 fortnite-treasure-odds/
 ├── src/
-│   ├── types/               # Definiciones de TypeScript estrictas
+│   ├── types/                # Strict TypeScript definitions
 │   ├── config/
-│   │   ├── constants.ts     # Denominadores base, multiplicadores y fuentes de referencia
-│   │   ├── rewards.ts       # Catálogo de recompensas y Gizmos
-│   │   └── locales.ts       # Diccionario i18n (Español / Inglés)
+│   │   ├── constants.ts      # Base denominators, multipliers, and reference sources
+│   │   ├── rewards.ts        # Reward and Gizmo catalog
+│   │   └── locales.ts        # i18n dictionary (Spanish / English)
 │   ├── math/
-│   │   ├── probability.ts   # Motor matemático exacto (log1p, expm1, Wilson CI)
-│   │   ├── models.ts        # Modelos Categórico e Independiente, bloqueo de duplicados
-│   │   ├── squad.ts         # Deduplicación y rendimiento de escuadrones
-│   │   └── *.test.ts        # Pruebas con Vitest
+│   │   ├── probability.ts    # Exact mathematical engine (log1p, expm1, Wilson CI)
+│   │   ├── models.ts         # Categorical and Independent models, duplicate prevention
+│   │   ├── squad.ts          # Squad deduplication and performance
+│   │   └── *.test.ts         # Vitest tests
 │   ├── simulation/
-│   │   └── prng.ts          # Generador pseudoaleatorio reproducible (Mulberry32)
+│   │   └── prng.ts           # Reproducible pseudorandom generator (Mulberry32)
 │   ├── workers/
-│   │   └── monteCarlo.worker.ts # Web Worker para simulaciones Monte Carlo
+│   │   └── monteCarlo.worker.ts # Web Worker for Monte Carlo simulations
 │   ├── storage/
-│   │   ├── localStorage.ts  # Capa de persistencia local
-│   │   └── exportImport.ts  # Utilidades de backup JSON y CSV
+│   │   ├── localStorage.ts   # Local persistence layer
+│   │   └── exportImport.ts   # JSON and CSV backup utilities
 │   ├── components/
 │   │   ├── common/          # Navbar, Card, Badge, Modal, Backup
 │   │   ├── dashboard/       # PirateCard, EventBanner, QuickStats
-│   │   ├── calculator/      # Calculadora interactiva con Recharts
-│   │   ├── simulator/       # Vista Monte Carlo y Minijuego de Apertura
-│   │   ├── squad/           # Simulador de escuadrones
-│   │   ├── planner/         # Planificador de Horas del Tesoro
-│   │   ├── inverse/         # Calculadora de objetivos y esfuerzo
-│   │   ├── tracker/         # Registro manual y tabla de historial
-│   │   ├── collection/      # Colección y catálogo editable
-│   │   ├── pirateShop/      # Planificador de ventanas y Wishlist
-│   │   ├── sources/         # Fuentes de referencia y glosario
-│   │   └── extras/          # Simulador What-If y calculadora de supervivencia
-│   ├── App.tsx              # Componente principal
-│   ├── main.tsx             # Punto de entrada React 18
-│   └── index.css            # Tailwind directives y animaciones
+│   │   ├── calculator/      # Interactive calculator with Recharts
+│   │   ├── simulator/       # Monte Carlo view and Chest Opening Minigame
+│   │   ├── squad/           # Squad simulator
+│   │   ├── planner/         # Treasure Hours Planner
+│   │   ├── inverse/         # Goals and effort calculator
+│   │   ├── tracker/         # Manual tracking and history table
+│   │   ├── collection/      # Editable reward collection and catalog
+│   │   ├── pirateShop/      # Availability window planner and Wishlist
+│   │   ├── sources/         # Reference sources and glossary
+│   │   └── extras/          # What-If simulator and survival calculator
+│   ├── App.tsx              # Main application component
+│   ├── main.tsx             # React 18 entry point
+│   └── index.css           # Tailwind directives and animations
 ├── index.html
 ├── package.json
 ├── tailwind.config.js
@@ -185,6 +208,6 @@ fortnite-treasure-odds/
 
 ---
 
-## 📄 Licencia
+## 📄 License
 
-Este proyecto está distribuido bajo la licencia [MIT](LICENSE).
+This project is distributed under the [MIT License](LICENSE).
